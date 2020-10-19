@@ -18,9 +18,9 @@
     </head>
     <body>
         <div id="app">
-            <hello-world></hello-world>
+            {{-- <hello-world></hello-world> --}}
         </div>
 
-        <script src="{!! asset('js/app.js') !!}"></script>
+        <script src="{!! asset('js/main.js') !!}"></script>
     </body>
 </html>
