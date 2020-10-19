@@ -1,7 +1,11 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
-Vue.component('hello-world', require('./components/HelloWorld.vue').default);
-new Vue({
-    el:"#app"
+
+Vue.component('my-thoughts-component', require('./components/MyThoughtsComponent.vue').default);
+Vue.component('thought-component', require('./components/ThoughtComponent.vue').default);
+Vue.component('form-component', require('./components/FormComponent.vue').default);
+
+const app = new Vue({
+    el: "#app"
 });
