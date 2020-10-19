@@ -29,7 +29,7 @@
         methods:{
             newThought(){
                 const thought = {
-                    id: 2,
+                    id: Math.floor(Math.random() * 1000) + 1,
                     description: this.description,
                     created_at: '11/22/3333'
                 }
