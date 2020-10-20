@@ -14,15 +14,13 @@
     export default{
         data(){
             return {
-                thoughts: [{
-                    'id': 1,
-                    'description': 'lorem',
-                    'created_at': '18/08/2020',
-                }]
+                thoughts: []
             }
         },
         mounted() {
-            console.log('Component mounted');
+            axios.get('/thoughts').then((response)=>{
+                this.thoughts = response.data;
+            });
         },
         methods: {
             addThought(thought){

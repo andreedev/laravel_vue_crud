@@ -3,7 +3,10 @@
         <div class="col-md-6">
             <div class="card">
                 <!-- <form action=""> -->
-                    <div class="card-header">Publicado en {{ thought.created_at }}</div>
+                    <div class="card-header">
+                        Publicado en {{ thought.created_at }}
+                        <div v-if="thought.created_at==thought.updated_at"> - Última actualización: {{ thought.updated_at }}</div>
+                    </div>
                     <div class="card-body">
                         <p v-if="!editMode">{{ thought.description }}</p>
                         <input v-else class="form-control" v-model="thought.description">
@@ -34,14 +37,22 @@
         },
         methods:{
             onClickDelete(){
-                this.$emit('delete');
+                axios.delete(`/thoughts/${this.thought.id}`).then(()=>{
+                    this.$emit('delete');
+                });
             },
             onClickEdit(){
                 this.editMode = true;
             },
             onClickUpdate(){
-                this.editMode = false;
-                this.$emit('update', this.thought);
+                const params = {
+                    description: this.thought.description
+                };
+                axios.put(`/thoughts/${this.thought.id}`, params).then((response)=>{
+                    this.editMode = false;
+                    const thought = response.data;
+                    this.$emit('update', this.thought);
+                });
             }
         }
     }

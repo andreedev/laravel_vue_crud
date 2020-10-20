@@ -1937,13 +1937,17 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     newThought: function newThought() {
-      var thought = {
-        id: Math.floor(Math.random() * 1000) + 1,
-        description: this.description,
-        created_at: '11/22/3333'
+      var _this = this;
+
+      var params = {
+        description: this.description
       };
-      this.$emit('new', thought);
       this.description = '';
+      axios.post('/thoughts', params).then(function (response) {
+        var thought = response.data;
+
+        _this.$emit('new', thought);
+      });
     }
   }
 });
@@ -1974,15 +1978,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      thoughts: [{
-        'id': 1,
-        'description': 'lorem',
-        'created_at': '18/08/2020'
-      }]
+      thoughts: []
     };
   },
   mounted: function mounted() {
-    console.log('Component mounted');
+    var _this = this;
+
+    axios.get('/thoughts').then(function (response) {
+      _this.thoughts = response.data;
+    });
   },
   methods: {
     addThought: function addThought(thought) {
@@ -2034,6 +2038,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['thought'],
   data: function data() {
@@ -2043,14 +2049,27 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     onClickDelete: function onClickDelete() {
-      this.$emit('delete');
+      var _this = this;
+
+      axios["delete"]("/thoughts/".concat(this.thought.id)).then(function () {
+        _this.$emit('delete');
+      });
     },
     onClickEdit: function onClickEdit() {
       this.editMode = true;
     },
     onClickUpdate: function onClickUpdate() {
-      this.editMode = false;
-      this.$emit('update', this.thought);
+      var _this2 = this;
+
+      var params = {
+        description: this.thought.description
+      };
+      axios.put("/thoughts/".concat(this.thought.id), params).then(function (response) {
+        _this2.editMode = false;
+        var thought = response.data;
+
+        _this2.$emit('update', _this2.thought);
+      });
     }
   }
 });
@@ -19844,7 +19863,13 @@ var render = function() {
     _c("div", { staticClass: "col-md-6" }, [
       _c("div", { staticClass: "card" }, [
         _c("div", { staticClass: "card-header" }, [
-          _vm._v("Publicado en " + _vm._s(_vm.thought.created_at))
+          _vm._v(
+            "\n                    Publicado en " +
+              _vm._s(_vm.thought.created_at) +
+              " - Última actualización: " +
+              _vm._s(_vm.thought.updated_at) +
+              "\n                "
+          )
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "card-body" }, [
@@ -32115,6 +32140,7 @@ module.exports = function(module) {
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+axios.defaults.baseURL = 'http://localhost/projects/14.laravel_vue_crud/public';
 Vue.component('my-thoughts-component', __webpack_require__(/*! ./components/MyThoughtsComponent.vue */ "./resources/js/components/MyThoughtsComponent.vue")["default"]);
 Vue.component('thought-component', __webpack_require__(/*! ./components/ThoughtComponent.vue */ "./resources/js/components/ThoughtComponent.vue")["default"]);
 Vue.component('form-component', __webpack_require__(/*! ./components/FormComponent.vue */ "./resources/js/components/FormComponent.vue")["default"]);

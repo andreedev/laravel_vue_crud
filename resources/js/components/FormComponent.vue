@@ -28,13 +28,14 @@
         },
         methods:{
             newThought(){
-                const thought = {
-                    id: Math.floor(Math.random() * 1000) + 1,
-                    description: this.description,
-                    created_at: '11/22/3333'
-                }
-                this.$emit('new', thought);
+                const params = {
+                    description: this.description
+                };
                 this.description = '';
+                axios.post('/thoughts', params).then((response) => {
+                    const thought = response.data;
+                    this.$emit('new', thought);
+                });
             }
         }
     }
