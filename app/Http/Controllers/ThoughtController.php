@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Thought;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ThoughtController extends Controller
@@ -41,6 +42,7 @@ class ThoughtController extends Controller
     {
         $thought = Thought::find($id);
         $thought->description = $request->description;
+        // $thought->updated_at = Carbon::now(new \DateTimeZone('America/Lima'));
         $thought->save();
         return $thought;
     }

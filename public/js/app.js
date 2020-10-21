@@ -2039,7 +2039,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['thought'],
   data: function data() {
@@ -2067,11 +2066,13 @@ __webpack_require__.r(__webpack_exports__);
       axios.put("/thoughts/".concat(this.thought.id), params).then(function (response) {
         _this2.editMode = false;
         var thought = response.data;
+        _this2.thought.getCurrentUpdatedAt = response.data.updated_at;
 
-        _this2.$emit('update', _this2.thought);
+        _this2.$emit('update', thought);
       });
     }
-  }
+  },
+  computed: {}
 });
 
 /***/ }),
@@ -19730,7 +19731,6 @@ var render = function() {
         _c(
           "form",
           {
-            attrs: { action: "" },
             on: {
               submit: function($event) {
                 $event.preventDefault()
@@ -19864,12 +19864,17 @@ var render = function() {
       _c("div", { staticClass: "card" }, [
         _c("div", { staticClass: "card-header" }, [
           _vm._v(
-            "\n                    Publicado en " +
+            "\n                Publicado en " +
               _vm._s(_vm.thought.created_at) +
-              " - Última actualización: " +
-              _vm._s(_vm.thought.updated_at) +
               "\n                "
-          )
+          ),
+          _vm.thought.created_at != _vm.thought.updated_at
+            ? _c("div", [
+                _vm._v(
+                  " - Última actualización " + _vm._s(_vm.thought.updated_at)
+                )
+              ])
+            : _vm._e()
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "card-body" }, [
@@ -19911,7 +19916,7 @@ var render = function() {
                 },
                 [
                   _vm._v(
-                    "\n                        Guardar cambios\n                    "
+                    "\n                    Guardar cambios\n                "
                   )
                 ]
               )
@@ -19925,17 +19930,13 @@ var render = function() {
                     }
                   }
                 },
-                [
-                  _vm._v(
-                    "\n                        Editar\n                    "
-                  )
-                ]
+                [_vm._v("\n                    Editar\n                ")]
               ),
           _vm._v(" "),
           _c(
             "button",
             {
-              staticClass: "btn btn-info",
+              staticClass: "btn btn-danger",
               attrs: { type: "submit" },
               on: {
                 click: function($event) {
@@ -19943,7 +19944,7 @@ var render = function() {
                 }
               }
             },
-            [_vm._v("\n                        Eliminar\n                    ")]
+            [_vm._v("\n                    Eliminar\n                ")]
           )
         ])
       ])
@@ -32186,15 +32187,14 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /*!***************************************************!*\
   !*** ./resources/js/components/FormComponent.vue ***!
   \***************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _FormComponent_vue_vue_type_template_id_b1dd1884___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./FormComponent.vue?vue&type=template&id=b1dd1884& */ "./resources/js/components/FormComponent.vue?vue&type=template&id=b1dd1884&");
 /* harmony import */ var _FormComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./FormComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/FormComponent.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _FormComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _FormComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -32224,7 +32224,7 @@ component.options.__file = "resources/js/components/FormComponent.vue"
 /*!****************************************************************************!*\
   !*** ./resources/js/components/FormComponent.vue?vue&type=script&lang=js& ***!
   \****************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

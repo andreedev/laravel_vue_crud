@@ -2,7 +2,7 @@
     <div class="row justify-content-center mt-3">
         <div class="col-md-6">
             <div class="card">
-                <form action="" v-on:submit.prevent="newThought()">
+                <form v-on:submit.prevent="newThought()">
                     <div class="card-header">¿En qué estás pensando?</div>
                     <div class="card-body">
                         <label>Ahora estoy pensando en:</label>
